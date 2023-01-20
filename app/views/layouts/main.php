@@ -35,16 +35,27 @@ AppAsset::register($this);
         ],
     ]);
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav'],
+        'options' => ['class' => ['navbar-nav', 'ml-auto']],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            [
+              'label' => 'Загрузки',
+              'items' => [
+                ['label' => 'Все', 'url' => ['/site/index']],
+                ['label' => 'Отгруженные', 'url' => ['/site/about']], 
+                ['label' => 'Не отгруженные', 'url' => ['/site/contact']],
+              ],
+            ],
+            [
+              'label' => 'Справочники',
+              'items' => [
+                ['label' => 'Транспорт', 'url' => ['transport/']],
+              ],
+            ],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+                ['label' => 'Вход', 'url' => ['/site/login']]
             ) : (
                 '<li>'
-                . Html::beginForm(['/site/logout'], 'post', ['class' => 'form-inline'])
+                . Html::beginForm(['/site/logout'], 'post', ['class' => ['form-inline', 'ml-auto']])
                 . Html::submitButton(
                     'Logout (' . Yii::$app->user->identity->username . ')',
                     ['class' => 'btn btn-link logout']
