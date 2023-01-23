@@ -33,6 +33,7 @@ class Loading extends \yii\db\ActiveRecord
         return [
             [['creation_date'], 'safe'],
             [['transport_id', 'is_loaded'], 'integer'],
+            ['transport_id', 'required'],
             [['transport_id'], 'exist', 'skipOnError' => true, 'targetClass' => Transport::class, 'targetAttribute' => ['transport_id' => 'id']],
         ];
     }

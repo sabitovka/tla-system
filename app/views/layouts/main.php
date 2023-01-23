@@ -40,10 +40,10 @@ AppAsset::register($this);
             [
               'label' => 'Загрузки',
               'items' => [
-                ['label' => 'Все', 'url' => ['loadings/']],
-                ['label' => 'Отгруженные', 'url' => ['/site/about']], 
                 ['label' => 'Не отгруженные', 'url' => ['/site/contact']],
+                ['label' => 'Отгруженные', 'url' => ['/site/about']], 
                 ['label' => 'Закрытые', 'url' => ['/site/contact']],
+                ['label' => 'Все', 'url' => ['loadings/']],
               ],
             ],
             [
