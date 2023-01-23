@@ -19,7 +19,7 @@ class m230118_120254_create_transport_table extends Migration
             'height' => $this->integer(),
             'length' => $this->integer(),
             'load_capacity' => $this->integer(),
-            'state_number' => $this->integer()
+            'state_number' => $this->string()
         ]);
 
         $this->createIndex('idx-state_number', '{{%transport}}', 'state_number', true);
