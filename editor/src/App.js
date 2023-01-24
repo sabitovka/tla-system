@@ -1,11 +1,9 @@
 import Card from 'react-bootstrap/Card';
 import OrdersList from './components/OrdersList';
-import { parseQuery } from './utils';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  console.log(parseQuery(window.location.search));
   return (
     <Card>
       <Card.Header>

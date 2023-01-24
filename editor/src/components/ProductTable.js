@@ -7,9 +7,13 @@ export default function ProductTable() {
       <thead>
         <tr>
           <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
+          <th>Название</th>
+          <th>Цена, руб.</th>
+          <th>Кол-во</th>
+          <th>Всего, руб.</th>
+          <th>Габариты, см^3</th>
+          <th>Вес, кг</th>
+          <th>Погружено</th>
         </tr>
       </thead>
       <tbody>
