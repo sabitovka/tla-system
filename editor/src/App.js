@@ -2,18 +2,19 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import Card from 'react-bootstrap/Card';
 import OrdersList from './components/OrdersList';
-import ToastHandler from './components/ToastHandler';
+import ToastHolder from './components/ToastHolder';
 import useHttp from './hooks/http.hook';
 import * as actions from "./store/actions";
+import config from './config/default';
 
 function App() {
   const { isLoading, request, error, clearError } = useHttp();
-  const errors = useSelector(state => state.errors);
   const dispatch = useDispatch();
 
   const fetchLoadingData = useCallback(async () => {
     try {
-      const fetched = await request('rest/loadings/1');
+      const fetched = await request(`${config.app.orderApiUrl}/orders`);
+      console.log(fetched)
       //setLoadingData(fetched);
     } catch (e) {}
   }, [request]);
@@ -40,7 +41,7 @@ function App() {
 
   return (
     <>
-      <ToastHandler items={errors} />
+      <ToastHolder />
       <Card>
         <Card.Header>
           <h3>Загрузки транспорта от 17.01.2023 21.16</h3>
