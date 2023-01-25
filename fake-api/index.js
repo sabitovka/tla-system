@@ -8,7 +8,7 @@ const middlewares = jsonServer.defaults()
 // https://github.com/jimschubert/json-server-many-to-many/blob/master/index.js
 
 // Includes one or more many-to-many relationships into `obj`. `resource` is provided for the known side of the association.
-function includeOld(obj, resource, includes) {
+function include(obj, resource, includes) {
     if(util.isNullOrUndefined(obj)) return;
 
     includes && [].concat(includes)
@@ -49,26 +49,25 @@ function includeOld(obj, resource, includes) {
                     obj[relationship] = [];
                     return;
                 }
-                const ids = items.map((item) => item[relationshipKey]);
 
-                const related = router.db.get(relationship).filter((elem) => {
-                    return ids.includes(elem.id);
-                }).value();
+                const related = router.db
+                    .get(relationship)
+                    .filter((elem) => {
+                        return !!items.find((item) => item[relationshipKey] === elem.id);
+                    })
+                    .map((elem) => {
+                        const item = items.find((item) => item[relationshipKey] === elem.id);
+                        if (!item) {
+                            return elem;
+                        }
+                        delete item[relationshipKey]
+                        return { ...item, ...elem }
+                    })
+                    .value();
 
                 obj[relationship] = related;
             }
         });
-}
-
-function include(obj, resource, includes) {
-    if (!obj) {
-        return;
-    }
-
-    includes && [includes]
-        .forEach(() => {
-
-        })
 }
 
 // This is fairly generic and should work for almost all endpoints. This could be more intuitive limited to only GET.
