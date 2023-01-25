@@ -18,17 +18,21 @@ class m230119_101233_create_loading_order_table extends Migration
             'order_id' => $this->integer(),
         ]);
 
-        $this->createIndex('idx-loading_order-loading_id', '{{%loading_order}}', 'loading_id');
-
+        
         $this->addForeignKey(
-          'fk-loading_order-loading_id',
-          '{{%loading_order}}',
-          'loading_id',
-          '{{%loading}}',
-          'id'
+            'fk-loading_order-loading_id',
+            '{{%loading_order}}',
+            'loading_id',
+            '{{%loading}}',
+            'id'
         );
-
-        $this->createIndex('idx-loading_order-order_id', '{{%loading_order}}', 'order_id');
+        
+        $this->createIndex(
+            'idx-order_id-loading_id',
+            '{{%loading_order}}',
+            ['loading_id', 'order_id'],
+            true
+        );
     }
 
     /**
@@ -37,8 +41,7 @@ class m230119_101233_create_loading_order_table extends Migration
     public function safeDown()
     {
         $this->dropForeignKey('fk-loading_order-loading_id', '{{%loading_order}}');
-        $this->dropIndex('idx-loading_order-loading_id', '{{%loading_order}}');
-        $this->dropIndex('idx-loading_order-order_id', '{{%loading_order}}');
+        $this->dropIndex('idx-order_id-loading_id', '{{%loading_order}}');
 
         $this->dropTable('{{%loading_order}}');
     }
