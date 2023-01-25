@@ -55,6 +55,16 @@ class Transport extends \yii\db\ActiveRecord
         ];
     }
 
+    public function fields()
+    {
+        return [
+            'id', 'name', 'width', 'height', 'length', 'load_capacity', 'state_number',
+            'volume' => function() {
+                return ($this->width * $this->height * $this->length) / 1000000; // литры
+            },
+        ];
+    }
+
     /**
      * Gets query for [[Loadings]].
      *

@@ -47,6 +47,15 @@ class LoadingOrder extends \yii\db\ActiveRecord
         ];
     }
 
+    public function fields()
+    {
+        return [
+            'id',
+            'loadingId' => 'loading_id',
+            'orderId' => 'order_id'
+        ];
+    }
+
     /**
      * Gets query for [[Loading]].
      *

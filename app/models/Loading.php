@@ -32,9 +32,17 @@ class Loading extends \yii\db\ActiveRecord
     {
         return [
             [['creation_date'], 'safe'],
-            [['transport_id', 'is_loaded'], 'integer'],
+            [['transport_id'], 'integer'],
+            [['is_loaded'], 'boolean'],
             ['transport_id', 'required'],
             [['transport_id'], 'exist', 'skipOnError' => true, 'targetClass' => Transport::class, 'targetAttribute' => ['transport_id' => 'id']],
+        ];
+    }
+
+    public function extraFields() {
+        return [
+            'transport',
+            'orders' => 'loadingOrders'
         ];
     }
 
