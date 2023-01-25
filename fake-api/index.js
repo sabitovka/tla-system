@@ -5,6 +5,8 @@ const server = jsonServer.create()
 const router = jsonServer.router('db.json')
 const middlewares = jsonServer.defaults()
 
+server.use(middlewares)
+
 // https://github.com/jimschubert/json-server-many-to-many/blob/master/index.js
 
 // Includes one or more many-to-many relationships into `obj`. `resource` is provided for the known side of the association.
@@ -93,8 +95,8 @@ server.use('/:resource/:id*?', (req, res, next) => {
     next();
 });
 
-server.use(middlewares)
 server.use(router)
+
 server.listen(3001, () => {
   console.log('\x1b[32mFor mock data thanks to https://dummyjson.com/\n');
   console.log('JSON Server is running on port ' + 3001)

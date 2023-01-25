@@ -1,6 +1,8 @@
 const initialState = {
   errors: [],
-  orders: [],
+  loading: {},
+  transport: {},
+  orders: []
 }
 
 export default initialState;

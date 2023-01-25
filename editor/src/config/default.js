@@ -1,6 +1,7 @@
 const dev = {
     app: {
-        orderApiUrl: 'http://localhost:3001'
+        orderApiUrl: 'http://transportloading',
+        orderApiUrl_: 'http://localhost:3001',
     }
 }
 

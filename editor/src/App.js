@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import Card from 'react-bootstrap/Card';
 import OrdersList from './components/OrdersList';
 import ToastHolder from './components/ToastHolder';
@@ -8,16 +8,20 @@ import * as actions from "./store/actions";
 import config from './config/default';
 
 function App() {
-  const { isLoading, request, error, clearError } = useHttp();
+  const { isLoading, request, error } = useHttp();
   const dispatch = useDispatch();
+  const transport = useSelector((state) => state.transport);
+  const loading = useSelector((state) => state.loading);
+  const orders = useSelector((state) => state.orders);
 
   const fetchLoadingData = useCallback(async () => {
     try {
-      const fetched = await request(`${config.app.orderApiUrl}/orders`);
+      const fetched = await request(`${config.app.orderApiUrl}/app/web/api/loadings/1?expand=orders,transport`);
       console.log(fetched)
-      //setLoadingData(fetched);
+      const { creation_date: creationDate, is_loaded: isLoaded } = fetched;
+      dispatch(actions.onLoadingFetched({ ...fetched, creationDate, isLoaded }));
     } catch (e) {}
-  }, [request]);
+  }, [request, dispatch]);
 
   useEffect(() => {
     fetchLoadingData();
@@ -26,28 +30,28 @@ function App() {
   useEffect(() => {
     if (error) {
       dispatch(actions.addError('Произошла ошибка при выполнении запроса. ', error));
-      clearError();
+      console.error(error);
     }
-    console.log(error);
-  }, [dispatch, error, clearError]);
+  }, [dispatch, error]);
+
+  if (error) {
+    return 'Невозможно загрузить страницу'
+  }
 
   if (isLoading) {
     return 'Загрузка';
   }
-
-  // if (error) {
-  //   return 'Невозможно загрузить страницу'
-  // }
 
   return (
     <>
       <ToastHolder />
       <Card>
         <Card.Header>
-          <h3>Загрузки транспорта от 17.01.2023 21.16</h3>
-          <h4>Автомобиль: ГАЗ будка А226ТУ</h4>
+          <h3>Погрузка транспорта №{loading.id} от {loading.creationDate}</h3>
+          <h4>Автомобиль: {transport.name} - {transport.state_number}</h4>
+          <div>{transport.volume}</div>
         </Card.Header>
-        <OrdersList />
+        <OrdersList orders={orders} />
       </Card>
     </>
   );
