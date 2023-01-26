@@ -13,7 +13,6 @@ function App() {
   const dispatch = useDispatch();
   const transport = useSelector((state) => state.transport);
   const loading = useSelector((state) => state.loading);
-  const orders = useSelector((state) => state.orders);
 
   const { id } = parseQuery(window.location.search);
 
@@ -58,7 +57,7 @@ function App() {
           <h4>Автомобиль: {transport.name} - {transport.state_number}</h4>
           <div>{transport.volume}</div>
         </Card.Header>
-        <OrdersList orders={orders} />
+        <OrdersList />
       </Card>
     </>
   );

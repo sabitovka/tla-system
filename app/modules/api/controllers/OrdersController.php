@@ -3,8 +3,10 @@
 namespace app\modules\api\controllers;
 
 use app\models\LoadingOrder;
+use app\models\LoadingOrderProduct;
 use yii\rest\ActiveController;
 use GuzzleHttp\Client;
+use stdClass;
 
 class OrdersController extends ActiveController {
 
@@ -34,23 +36,35 @@ class OrdersController extends ActiveController {
     public function actions()
     {
         $actions = parent::actions();
-
-        
+        unset($actions['view']);       
 
         return $actions;
     }
 
     public function actionView($id)
     {
-        $orderLoading = LoadingOrder::findOne(['id' => $id]);
+        $loadedProducts = LoadingOrderProduct::find()->where(['loading_order_id' => $id])->all();
 
         // Create a client with a base URI
-        $client = new Client(['base_uri' => 'localhost:3001']);
+        $client = new Client(['base_uri' => 'http://localhost:3001']);
         // Send a request to https://foo.com/api/test
-        $response = $client->get(`orders/$id?_include=products`);
-        $orderLoading->products = json_decode($response->getBody());
+        $response = $client->request('GET', "orders/$id?_include=products");
+        $order = json_decode($response->getBody(), true);
 
-        return $orderLoading;
+        foreach ($order['products'] as &$product) {
+            $product['isLoaded'] = $this->searchForId($product['productId'], $loadedProducts, 'poduct_id') !== null;
+        }
+
+        return $order;
     }
+
+    private function searchForId($id, $array, $idKey = 'id') {
+        foreach ($array as $key => $val) {
+            if ($val[$idKey] === $id) {
+                return $key;
+            }
+        }
+        return null;
+     }
 
 }

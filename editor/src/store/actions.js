@@ -17,7 +17,7 @@ export const onLoadingFetched = ({ id, creationDate, transport, isLoaded, orders
   payload: { id, creationDate, transport, isLoaded, orders }
 })
 
-export const fetchOrder = ({ id, products, customer }) => ({
+export const fetchOrder = (fetched) => ({
   type: actions.ORDER_FETCHED,
-  payload: { id, products, customer }
+  payload: fetched
 })

@@ -12,10 +12,8 @@ const OrderCard = ({ orderId, order, eventKey, onOrderLoaded }) => {
 
   const fetchOrder = useCallback(async () => {
     try {
-      request(`${config.app.orderApiUrl}/app/web/api/orders?id=${orderId}`)
-        .then((data) => {
-            onOrderLoaded(data);
-        });
+      const data = await request(`${config.app.orderApiUrl}/app/web/api/orders/${orderId}`)
+      onOrderLoaded(data)
     } catch (e) {}
   }, [request, orderId, onOrderLoaded]);
 
@@ -30,10 +28,17 @@ const OrderCard = ({ orderId, order, eventKey, onOrderLoaded }) => {
     }
   }, [/* dispatch, */ error]);
 
+  const header = (order) => {
+    if (order && order.customer) {
+      return `Заказ №${order.id} - ${order.customer.name}, ${order.customer.adress}, ${order.customer.tel}`;
+    }
+    return <Placeholder xs={8} />
+  }
+
   return (
     <Accordion.Item eventKey={eventKey}>
       <Accordion.Header>
-        { order ? `${order.id}` : <Placeholder xs={8} /> }
+        { header(order) }
       </Accordion.Header>
       <Accordion.Body className='p-0'>
         { order && <ProductTable /> }
@@ -44,15 +49,15 @@ const OrderCard = ({ orderId, order, eventKey, onOrderLoaded }) => {
 
 const mapStateToProps = (state, ownProps) => {
     const { orderId } = ownProps;
-    console.log(state, orderId, state.orders[orderId]);
-    return { order: state.orders }
+    return {
+      order: state.orders.find((order) => orderId === order.orderId),
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    console.log(2);
     return {
         onOrderLoaded: (fetched) => {
-            return dispatch(actions.fetchOrder({ id: fetched.id, products: fetched.products, customer: fetched.customer }))
+            return dispatch(actions.fetchOrder(fetched))
         }
     }
 }
