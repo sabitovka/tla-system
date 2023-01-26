@@ -62,7 +62,6 @@ function include(obj, resource, includes) {
                         if (!item) {
                             return elem;
                         }
-                        delete item[relationshipKey]
                         return { ...item, ...elem }
                     })
                     .value();

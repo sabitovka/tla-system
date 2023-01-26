@@ -72,93 +72,15 @@
 		},
 		{
 			"id": 2,
-			"products": [
-				{
-					"id": 96,
-					"title": "lighting ceiling kitchen",
-					"price": 30,
-					"quantity": 2,
-					"total": 60,
-					"discountPercentage": 14.89,
-					"discountedPrice": 51,
-          "dimensions": {
-            "width": 100,
-            "height": 150,
-            "length": 50,
-            "weight": 1000
-          }
-				},
-				{
-					"id": 91,
-					"title": "Black Motorbike",
-					"price": 569,
-					"quantity": 3,
-					"total": 1707,
-					"discountPercentage": 13.63,
-					"discountedPrice": 1474,
-          "dimensions": {
-            "width": 100,
-            "height": 150,
-            "length": 50,
-            "weight": 1000
-          }
-				},
-				{
-					"id": 9,
-					"title": "Infinix INBOOK",
-					"price": 1099,
-					"quantity": 1,
-					"total": 1099,
-					"discountPercentage": 11.83,
-					"discountedPrice": 969,
-          "dimensions": {
-            "width": 100,
-            "height": 150,
-            "length": 50,
-            "weight": 1000
-          }
-				},
-				{
-					"id": 16,
-					"title": "Hyaluronic Acid Serum",
-					"price": 19,
-					"quantity": 1,
-					"total": 19,
-					"discountPercentage": 13.31,
-					"discountedPrice": 16,
-          "dimensions": {
-            "width": 100,
-            "height": 150,
-            "length": 50,
-            "weight": 1000
-          }
-				},
-				{
-					"id": 54,
-					"title": "Pubg Printed Graphic T-Shirt",
-					"price": 46,
-					"quantity": 3,
-					"total": 138,
-					"discountPercentage": 16.44,
-					"discountedPrice": 115,
-          "dimensions": {
-            "width": 100,
-            "height": 150,
-            "length": 50,
-            "weight": 1000
-          }
-				}
-			],
 			"total": 3023,
-			"discountedTotal": 2625,
 			"userId": 30,
 			"totalProducts": 5,
 			"totalQuantity": 10,
-      "customer": {
-        "name": "Dohn Doe",
-        "tel": "+79497777777",
-        "adress": "Lenina st., 21"
-      }
+            "customer": {
+                "name": "Dohn Doe",
+                "tel": "+79497777777",
+                "adress": "Lenina st., 21"
+            }
 		},
 		{
 			"id": 3,
@@ -1786,6 +1708,12 @@
         { "productId": 88, "orderId": 1, "quantity": 2, "total": 58 },
         { "productId": 18, "orderId": 1, "quantity": 2, "total": 30 },
         { "productId": 95, "orderId": 1, "quantity": 1, "total": 930 },
-        { "productId": 39, "orderId": 1, "quantity": 2, "total": 1200 }
+        { "productId": 39, "orderId": 1, "quantity": 2, "total": 1200 },
+
+        { "productId": 59, "orderId": 2, "quantity": 3, "total": 60 },
+        { "productId": 88, "orderId": 2, "quantity": 2, "total": 58 },
+        { "productId": 18, "orderId": 2, "quantity": 2, "total": 30 },
+        { "productId": 95, "orderId": 2, "quantity": 1, "total": 930 },
+        { "productId": 39, "orderId": 2, "quantity": 2, "total": 1200 }
     ]
 }

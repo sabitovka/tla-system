@@ -6,6 +6,7 @@ import ToastHolder from './components/ToastHolder';
 import useHttp from './hooks/http.hook';
 import * as actions from "./store/actions";
 import config from './config/default';
+import { parseQuery } from './utils';
 
 function App() {
   const { isLoading, request, error } = useHttp();
@@ -14,14 +15,16 @@ function App() {
   const loading = useSelector((state) => state.loading);
   const orders = useSelector((state) => state.orders);
 
+  const { id } = parseQuery(window.location.search);
+
   const fetchLoadingData = useCallback(async () => {
     try {
-      const fetched = await request(`${config.app.orderApiUrl}/app/web/api/loadings/1?expand=orders,transport`);
+      const fetched = await request(`${config.app.orderApiUrl}/app/web/api/loadings/${id}?expand=orders,transport`);
       console.log(fetched)
       const { creation_date: creationDate, is_loaded: isLoaded } = fetched;
       dispatch(actions.onLoadingFetched({ ...fetched, creationDate, isLoaded }));
     } catch (e) {}
-  }, [request, dispatch]);
+  }, [request, dispatch, id]);
 
   useEffect(() => {
     fetchLoadingData();
@@ -33,6 +36,10 @@ function App() {
       console.error(error);
     }
   }, [dispatch, error]);
+
+  if (!id) {
+    return 'Не указан план загрузки';
+  }
 
   if (error) {
     return 'Невозможно загрузить страницу'

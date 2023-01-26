@@ -3,7 +3,7 @@ import NewOrderModal from './NewOrderModal';
 import OrderCard from './OrderCard';
 
 export default function OrdersList({ orders }) {
-  const orderIds = Object.keys(orders);
+  const orderIds = orders.map((order) => order.id);
 
   return (
     <div className='p-3'>
@@ -11,8 +11,8 @@ export default function OrdersList({ orders }) {
       <NewOrderModal className='mb-2' />
       <Accordion alwaysOpen defaultActiveKey={orderIds}>
         {
-          orderIds.map(orderId => 
-            <OrderCard eventKey={orderId} key={orderId} orderId={orderId} />)
+          orders.map((order) => 
+            <OrderCard eventKey={order.id} key={order.id} orderId={order.id} />)
         }
       </Accordion>
     </div>

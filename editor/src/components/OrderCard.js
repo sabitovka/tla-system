@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import Accordion from 'react-bootstrap/Accordion';
 import Placeholder from 'react-bootstrap/Placeholder';
 import ProductTable from './ProductTable';
@@ -7,18 +7,17 @@ import useHttp from "../hooks/http.hook";
 import * as actions from "../store/actions"; 
 import config from '../config/default';
 
-export default function OrderCard({ orderId, eventKey }) {
+const OrderCard = ({ orderId, order, eventKey, onOrderLoaded }) => {
   const { request, error } = useHttp();
-  const order = useSelector((state) => state[orderId]);
-  const dispatch = useDispatch();
 
   const fetchOrder = useCallback(async () => {
     try {
-      const fetched = await request(`${config.app.orderApiUrl_}/orders/${orderId}?_include=products`);
-      console.log(fetched)
-      dispatch(actions.fetchOrder({ id: orderId, products: fetched.products, customer: fetched.customer }));
+      request(`${config.app.orderApiUrl}/app/web/api/orders?id=${orderId}`)
+        .then((data) => {
+            onOrderLoaded(data);
+        });
     } catch (e) {}
-  }, [request, orderId, dispatch]);
+  }, [request, orderId, onOrderLoaded]);
 
   useEffect(() => {
     fetchOrder();
@@ -26,11 +25,11 @@ export default function OrderCard({ orderId, eventKey }) {
 
   useEffect(() => {
     if (error) {
-      dispatch(actions.addError('Произошла ошибка при выполнении запроса. ', error));
+      // dispatch(actions.addError('Произошла ошибка при выполнении запроса. ', error));
       console.error(error);
     }
-  }, [dispatch, error]);
-  
+  }, [/* dispatch, */ error]);
+
   return (
     <Accordion.Item eventKey={eventKey}>
       <Accordion.Header>
@@ -42,3 +41,20 @@ export default function OrderCard({ orderId, eventKey }) {
     </Accordion.Item>
   )
 }
+
+const mapStateToProps = (state, ownProps) => {
+    const { orderId } = ownProps;
+    console.log(state, orderId, state.orders[orderId]);
+    return { order: state.orders }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    console.log(2);
+    return {
+        onOrderLoaded: (fetched) => {
+            return dispatch(actions.fetchOrder({ id: fetched.id, products: fetched.products, customer: fetched.customer }))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrderCard);
