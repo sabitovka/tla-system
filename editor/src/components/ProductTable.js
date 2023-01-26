@@ -1,8 +1,9 @@
+import React from 'react';
 import Table from 'react-bootstrap/Table';
 import ProductTableRow from './ProductTableRow';
 
-export default function ProductTable() {
-  return (
+export default function ProductTable({ products }) {
+  return (//React.useMemo(() => (
     <Table striped bordered hover size="sm">
       <thead>
         <tr>
@@ -17,8 +18,11 @@ export default function ProductTable() {
         </tr>
       </thead>
       <tbody>
-        <ProductTableRow />
+        {
+          products.map((product, idx) => (<ProductTableRow product={product} key={idx} />))
+        }
       </tbody>
     </Table>
+    //), [products]
   )
 }

@@ -41,7 +41,7 @@ const OrderCard = ({ orderId, order, eventKey, onOrderLoaded }) => {
         { header(order) }
       </Accordion.Header>
       <Accordion.Body className='p-0'>
-        { order && <ProductTable /> }
+        { order?.products && <ProductTable products={order.products} /> }
       </Accordion.Body>
     </Accordion.Item>
   )

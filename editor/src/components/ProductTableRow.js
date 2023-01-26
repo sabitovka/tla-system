@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 
-export default function ProductTableRow() {
+export default function ProductTableRow({ product }) {
   const [loaded, setLoaded] = useState(false);
 
   function onCheckChange(e) {
@@ -10,20 +10,20 @@ export default function ProductTableRow() {
   }
 
   const style = {
-    bg: loaded ? 'bg-success' : 'bg-warning',
-    text: loaded ? 'text-light' : 'text-dark',
+    bg: product.isLoaded ? 'bg-success' : 'bg-warning',
+    text: product.isLoaded ? 'text-light' : 'text-dark',
   }
 
   return (
     <tr className={style.bg}>
       <td className={style.text}>1</td>
-      <td className={style.text}>Spring and summershoes</td>
-      <td className={style.text}>20</td>
-      <td className={style.text}>3 шт</td>
-      <td className={style.text}>60</td>
+      <td className={style.text}>{product.title}</td>
+      <td className={style.text}>{product.price}</td>
+      <td className={style.text}>{product.quantity} шт</td>
+      <td className={style.text}>{product.total}</td>
       <td className={style.text}>3500 (100x150x50)</td>
-      <td className={style.text}>1000</td>
-      <td><Form.Check type="checkbox" defaultValue={loaded} onChange={onCheckChange} /></td>
+      <td className={style.text}>{product.dimensions.weight}</td>
+      <td><Form.Check type="checkbox" defaultChecked={product.isLoaded} onChange={onCheckChange} /></td>
     </tr>
   )
 }

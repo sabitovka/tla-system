@@ -1,15 +1,11 @@
 import Accordion from 'react-bootstrap/Accordion';
 import { useSelector } from 'react-redux';
-import { Mutex } from '../utils';
 import NewOrderModal from './NewOrderModal';
 import OrderCard from './OrderCard';
 
 export default function OrdersList() {
-  const orders = useSelector((state) => state.orders);
+  const orders = useSelector((state) => state.rawOrders);
   const orderIds = orders.map((order) => order.orderId);
-
-  //const mutex = new Mutex();
-  console.log(1);
 
   return (
     <div className='p-3'>
