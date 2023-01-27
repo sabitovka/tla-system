@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 
-export default function ProductTableRow({ product }) {
-  const [loaded, setLoaded] = useState(false);
+export default function ProductTableRow({ product, onChecked, onUnchecked }) {
+  const [loaded, setLoaded] = useState(product.isLoaded);
 
   function onCheckChange(e) {
-    console.log(e.target.checked, loaded);
-    setLoaded(e.target.checked);
+    const checked = e.target.checked
+    setLoaded(checked);
+    const fn = checked ? onChecked : onUnchecked;
+    fn(product, product.isLoaded ? 'delete' : 'insert');
   }
 
   const style = {
-    bg: product.isLoaded ? 'bg-success' : 'bg-warning',
-    text: product.isLoaded ? 'text-light' : 'text-dark',
+    bg: loaded ? 'bg-success' : 'bg-warning',
+    text: loaded ? 'text-light' : 'text-dark',
   }
 
   return (
@@ -23,7 +25,7 @@ export default function ProductTableRow({ product }) {
       <td className={style.text}>{product.total}</td>
       <td className={style.text}>3500 (100x150x50)</td>
       <td className={style.text}>{product.dimensions.weight}</td>
-      <td><Form.Check type="checkbox" defaultChecked={product.isLoaded} onChange={onCheckChange} /></td>
+      <td><Form.Check type="checkbox" defaultChecked={loaded} onChange={onCheckChange} /></td>
     </tr>
   )
 }

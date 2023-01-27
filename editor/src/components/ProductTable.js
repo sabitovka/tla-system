@@ -1,8 +1,21 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import Table from 'react-bootstrap/Table';
 import ProductTableRow from './ProductTableRow';
+import * as actions from "../store/actions";
 
-export default function ProductTable({ products }) {
+export default function ProductTable({ products, additionalOrderId }) {
+  const dispatch = useDispatch();
+
+  function onChecked(product, action) {
+    dispatch(actions.addProduct(product, additionalOrderId, action));
+  }
+
+  function onUnchecked(product) {
+    console.log(product);
+    dispatch(actions.deleteProduct(product, additionalOrderId));
+  }
+
   return (//React.useMemo(() => (
     <Table striped bordered hover size="sm">
       <thead>
@@ -19,7 +32,14 @@ export default function ProductTable({ products }) {
       </thead>
       <tbody>
         {
-          products.map((product, idx) => (<ProductTableRow product={product} key={idx} />))
+          products.map((product, idx) => (
+            <ProductTableRow
+              key={idx}
+              product={product}
+              onChecked={onChecked}
+              onUnchecked={onUnchecked}
+            />
+          ))
         }
       </tbody>
     </Table>

@@ -60,6 +60,7 @@ $config = [
             'rules' => [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/loadings'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/orders'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/products'],
             ],
         ],
     ],

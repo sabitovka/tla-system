@@ -17,7 +17,17 @@ export const onLoadingFetched = ({ id, creationDate, transport, isLoaded, orders
   payload: { id, creationDate, transport, isLoaded, orders }
 })
 
-export const fetchOrder = (fetched) => ({
+export const fetchOrder = (fetched, additionalId) => ({
   type: actions.ORDER_FETCHED,
-  payload: fetched
+  payload: { ...fetched, additionalId }
+})
+
+export const addProduct = ({ id: productId }, additionalId, action) => ({
+    type: actions.PRODUCT_ADD,
+    payload: { productId, additionalId, action },
+})
+
+export const deleteProduct = ({ id: productId }, additionalId,) => ({
+    type: actions.PRODUCT_DELETE,
+    payload: { productId, additionalId },
 })

@@ -4,6 +4,7 @@ const initialState = {
   transport: {},
   orders: [],
   rawOrders: [],
+  productsQueue: [],
 }
 
 export default initialState;

@@ -7,18 +7,18 @@ import useHttp from "../hooks/http.hook";
 import * as actions from "../store/actions"; 
 import config from '../config/default';
 
-const OrderCard = ({ orderId, order, eventKey, onOrderLoaded, onError }) => {
+const OrderCard = ({ orderId, additionalId, order, eventKey, onOrderLoaded, onError }) => {
   const { request } = useHttp();
 
   const fetchOrder = useCallback(async () => {
     try {
       request(`${config.app.orderApiUrl}/app/web/api/orders/${orderId}`)
-        .then(onOrderLoaded)
+        .then((data) => onOrderLoaded(data, additionalId))
         .catch(onError);
     } catch (e) {
         
     }
-  }, [request, orderId, onOrderLoaded, onError]);
+  }, [request, orderId, onOrderLoaded, onError, additionalId]);
 
   useEffect(() => {
     fetchOrder();
@@ -37,7 +37,7 @@ const OrderCard = ({ orderId, order, eventKey, onOrderLoaded, onError }) => {
         { header(order) }
       </Accordion.Header>
       <Accordion.Body className='p-0'>
-        { order?.products && <ProductTable products={order.products} /> }
+        { order?.products && <ProductTable products={order.products} additionalOrderId={order.additionalId} /> }
       </Accordion.Body>
     </Accordion.Item>
   )
@@ -48,7 +48,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    onOrderLoaded: (fetched) => dispatch(actions.fetchOrder(fetched)),
+    onOrderLoaded: (fetched, additionalId) => dispatch(actions.fetchOrder(fetched, additionalId)),
     onError: (err) => dispatch(actions.addError('Произошла ошибка выполнения запроса', err.message))
 })
 
