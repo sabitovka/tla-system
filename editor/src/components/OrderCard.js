@@ -7,26 +7,22 @@ import useHttp from "../hooks/http.hook";
 import * as actions from "../store/actions"; 
 import config from '../config/default';
 
-const OrderCard = ({ orderId, order, eventKey, onOrderLoaded }) => {
-  const { request, error } = useHttp();
+const OrderCard = ({ orderId, order, eventKey, onOrderLoaded, onError }) => {
+  const { request } = useHttp();
 
   const fetchOrder = useCallback(async () => {
     try {
-      const data = await request(`${config.app.orderApiUrl}/app/web/api/orders/${orderId}`)
-      onOrderLoaded(data)
-    } catch (e) {}
-  }, [request, orderId, onOrderLoaded]);
+      request(`${config.app.orderApiUrl}/app/web/api/orders/${orderId}`)
+        .then(onOrderLoaded)
+        .catch(onError);
+    } catch (e) {
+        
+    }
+  }, [request, orderId, onOrderLoaded, onError]);
 
   useEffect(() => {
     fetchOrder();
   }, [fetchOrder]);
-
-  useEffect(() => {
-    if (error) {
-      // dispatch(actions.addError('Произошла ошибка при выполнении запроса. ', error));
-      console.error(error);
-    }
-  }, [/* dispatch, */ error]);
 
   const header = (order) => {
     if (order && order.customer) {
@@ -47,19 +43,13 @@ const OrderCard = ({ orderId, order, eventKey, onOrderLoaded }) => {
   )
 }
 
-const mapStateToProps = (state, ownProps) => {
-    const { orderId } = ownProps;
-    return {
-      order: state.orders.find((order) => orderId === order.orderId),
-    }
-}
+const mapStateToProps = (state, ownProps) => ({
+      order: state.orders.find((order) => ownProps['orderId'] === order.orderId),
+})
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onOrderLoaded: (fetched) => {
-            return dispatch(actions.fetchOrder(fetched))
-        }
-    }
-}
+const mapDispatchToProps = (dispatch) => ({
+    onOrderLoaded: (fetched) => dispatch(actions.fetchOrder(fetched)),
+    onError: (err) => dispatch(actions.addError('Произошла ошибка выполнения запроса', err.message))
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrderCard);
