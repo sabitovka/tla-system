@@ -1,16 +1,25 @@
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import { useSelector } from 'react-redux';
+import useHttp from '../hooks/http.hook';
 import NewOrderModal from './NewOrderModal';
 import OrderCard from './OrderCard';
+import config from '../config/default';
 
 export default function OrdersList() {
   const orders = useSelector((state) => state.rawOrders);
   const productsQueue = useSelector((state) => state.productsQueue);
+  const { request } = useHttp();
+
   const orderIds = orders.map((order) => order.id);
 
   const onSave = () => {
     console.log(productsQueue)
+    request(
+      `${config.app.orderApiUrl}/app/web/api/products/save-batch`,
+      'POST',
+      productsQueue
+    ).then((data) => console.log('saved', data))
   }
 
   return (

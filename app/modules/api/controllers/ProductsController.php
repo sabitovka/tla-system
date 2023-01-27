@@ -38,7 +38,7 @@ class ProductsController extends ActiveController {
         try {
             foreach ($items as $item) {
                 $newItem = new LoadingOrderProduct();
-                $newItem->loading_order_id = $item['additionalId'];
+                $newItem->loading_order_id = $item['orderId'];
                 $newItem->poduct_id = $item['productId'];
                 $newItem->save();
             }

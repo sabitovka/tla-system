@@ -6,7 +6,6 @@ use app\models\LoadingOrder;
 use app\models\LoadingOrderProduct;
 use yii\rest\ActiveController;
 use GuzzleHttp\Client;
-use stdClass;
 
 class OrdersController extends ActiveController {
 
