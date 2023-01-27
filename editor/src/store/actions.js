@@ -22,12 +22,27 @@ export const fetchOrder = (fetched) => ({
   payload: { ...fetched }
 })
 
-export const addProduct = (productId, orderId, action) => ({
+export const addProduct = (product, orderId, action) => ({
     type: actions.PRODUCT_ADD,
-    payload: { productId, orderId, action },
+    payload: { ...product, orderId, action },
 })
 
-export const deleteProduct = (productId, orderId,) => ({
+export const deleteProduct = (product, orderId,) => ({
     type: actions.PRODUCT_DELETE,
-    payload: { productId, orderId },
+    payload: { ...product, orderId },
+})
+
+export const setCost = (value) => ({
+  type: actions.COST_SET,
+  payload: { value }
+})
+
+export const setVolume = (value) => ({
+  type: actions.VOLUME_SET,
+  payload: { value }
+})
+
+export const setWeight = (value) => ({
+  type: actions.WEIGHT_SET,
+  payload: { value }
 })

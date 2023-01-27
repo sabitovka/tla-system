@@ -53,6 +53,9 @@ class OrdersController extends ActiveController {
 
         foreach ($order['products'] as &$product) {
             $product['isLoaded'] = $this->searchForId($product['productId'], $loadedProducts, 'poduct_id') !== null;
+            $product['totalWeight'] = $product['dimensions']['weight'] * $product['quantity'];
+            $product['dimensions']['volume'] = ($product['dimensions']['width'] * $product['dimensions']['height'] * $product['dimensions']['length']) / 1000000;
+            $product['totalVolume'] = $product['dimensions']['volume'] * $product['quantity'];
         }
 
         $order['num'] = $order['id'];

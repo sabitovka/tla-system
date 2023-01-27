@@ -24,13 +24,32 @@ export default function reducer(state = initialState, action) {
     }
     case actions.PRODUCT_ADD: {
         const productsQueue = state.productsQueue.concat(action.payload);
-        return { ...state, productsQueue }
+        const totalCost = state.totalCost + action.payload.total;
+        const totalWeight = state.totalWeight + action.payload.totalWeight;
+        const totalVolume = state.totalVolume + action.payload.totalVolume;
+        return { ...state, productsQueue, totalCost, totalVolume, totalWeight }
     }
     case actions.PRODUCT_DELETE: {
         const productsQueue = state.productsQueue.filter(
             (item) => !(item.productId === action.payload.productId 
                 && item.orderId === action.payload.orderId))
-        return { ...state, productsQueue }
+
+        const totalCost = state.totalCost - action.payload.total;
+        const totalWeight = state.totalWeight - action.payload.totalWeight;
+        const totalVolume = state.totalVolume - action.payload.totalVolume;
+        return { ...state, productsQueue, totalCost, totalWeight, totalVolume }
+    }
+    case actions.COST_SET: {
+      const totalCost = action.payload.value;
+      return { ...state, totalCost }
+    }
+    case actions.VOLUME_SET: {
+      const totalVolume = action.payload.value;
+      return { ...state, totalVolume }
+    }
+    case actions.WEIGHT_SET: {
+      const totalWeight = action.payload.value;
+      return { ...state, totalWeight }
     }
     default:
       return state;

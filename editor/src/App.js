@@ -7,6 +7,7 @@ import useHttp from './hooks/http.hook';
 import * as actions from "./store/actions";
 import config from './config/default';
 import { parseQuery } from './utils';
+import LoadingHeader from './components/LoadingHeader';
 
 function App() {
   const { isLoading, request, error } = useHttp();
@@ -53,9 +54,7 @@ function App() {
       <ToastHolder />
       <Card>
         <Card.Header>
-          <h3>Погрузка транспорта №{loading.id} от {loading.creationDate}</h3>
-          <h4>Автомобиль: {transport.name} - {transport.state_number}</h4>
-          <div>{transport.volume}</div>
+          <LoadingHeader loading={loading} transport={transport} />
         </Card.Header>
         <OrdersList />
       </Card>

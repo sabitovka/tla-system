@@ -23,8 +23,8 @@ export default function ProductTableRow({ product, onChecked, onUnchecked }) {
       <td className={style.text}>{product.price}</td>
       <td className={style.text}>{product.quantity} шт</td>
       <td className={style.text}>{product.total}</td>
-      <td className={style.text}>3500 (100x150x50)</td>
-      <td className={style.text}>{product.dimensions.weight}</td>
+      <td className={style.text}>{product.totalVolume}</td>
+      <td className={style.text}>{product.totalWeight}</td>
       <td><Form.Check type="checkbox" defaultChecked={loaded} onChange={onCheckChange} /></td>
     </tr>
   )

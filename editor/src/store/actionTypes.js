@@ -4,3 +4,6 @@ export const LOADING_FETCHED = 'LOADING_FETCHED';
 export const ORDER_FETCHED = 'ORDER_FETCHED';
 export const PRODUCT_ADD = 'PRODUCT_ADD';
 export const PRODUCT_DELETE = 'PRODUCT_DELETE';
+export const COST_SET = 'COST_SET';
+export const WEIGHT_SET = 'WEIGHT_SET';
+export const VOLUME_SET = 'VOLUME_SET';
