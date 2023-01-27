@@ -4,16 +4,16 @@ import Table from 'react-bootstrap/Table';
 import ProductTableRow from './ProductTableRow';
 import * as actions from "../store/actions";
 
-export default function ProductTable({ products, additionalOrderId }) {
+export default function ProductTable({ products, orderId }) {
   const dispatch = useDispatch();
 
   function onChecked(product, action) {
-    dispatch(actions.addProduct(product, additionalOrderId, action));
+    dispatch(actions.addProduct(product.id, orderId, action));
   }
 
   function onUnchecked(product) {
     console.log(product);
-    dispatch(actions.deleteProduct(product, additionalOrderId));
+    dispatch(actions.deleteProduct(product));
   }
 
   return (//React.useMemo(() => (

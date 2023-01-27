@@ -7,7 +7,7 @@ import OrderCard from './OrderCard';
 export default function OrdersList() {
   const orders = useSelector((state) => state.rawOrders);
   const productsQueue = useSelector((state) => state.productsQueue);
-  const orderIds = orders.map((order) => order.orderId);
+  const orderIds = orders.map((order) => order.id);
 
   const onSave = () => {
     console.log(productsQueue)
@@ -21,10 +21,9 @@ export default function OrdersList() {
         {
           orders.map((order, idx) => 
             <OrderCard
-              eventKey={order.orderId}
+              eventKey={order.id}
               key={idx}
-              orderId={order.orderId}
-              additionalId={order.id}
+              orderId={order.id}
               />)
         }
       </Accordion>

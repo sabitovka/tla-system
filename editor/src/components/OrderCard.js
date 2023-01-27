@@ -7,18 +7,18 @@ import useHttp from "../hooks/http.hook";
 import * as actions from "../store/actions"; 
 import config from '../config/default';
 
-const OrderCard = ({ orderId, additionalId, order, eventKey, onOrderLoaded, onError }) => {
+const OrderCard = ({ orderId, order, eventKey, onOrderLoaded, onError }) => {
   const { request } = useHttp();
 
   const fetchOrder = useCallback(async () => {
     try {
       request(`${config.app.orderApiUrl}/app/web/api/orders/${orderId}`)
-        .then((data) => onOrderLoaded(data, additionalId))
+        .then(onOrderLoaded)
         .catch(onError);
     } catch (e) {
         
     }
-  }, [request, orderId, onOrderLoaded, onError, additionalId]);
+  }, [request, orderId, onOrderLoaded, onError]);
 
   useEffect(() => {
     fetchOrder();
@@ -26,7 +26,7 @@ const OrderCard = ({ orderId, additionalId, order, eventKey, onOrderLoaded, onEr
 
   const header = (order) => {
     if (order && order.customer) {
-      return `Заказ №${order.id} - ${order.customer.name}, ${order.customer.adress}, ${order.customer.tel}`;
+      return `Заказ №${order.num} - ${order.customer.name}, ${order.customer.adress}, ${order.customer.tel}`;
     }
     return <Placeholder xs={8} />
   }
@@ -37,18 +37,18 @@ const OrderCard = ({ orderId, additionalId, order, eventKey, onOrderLoaded, onEr
         { header(order) }
       </Accordion.Header>
       <Accordion.Body className='p-0'>
-        { order?.products && <ProductTable products={order.products} additionalOrderId={order.additionalId} /> }
+        { order?.products && <ProductTable products={order.products} orderId={order.id} /> }
       </Accordion.Body>
     </Accordion.Item>
   )
 }
 
 const mapStateToProps = (state, ownProps) => ({
-      order: state.orders.find((order) => ownProps['orderId'] === order.orderId),
+      order: state.orders.find((order) => ownProps['orderId'] === order.id),
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    onOrderLoaded: (fetched, additionalId) => dispatch(actions.fetchOrder(fetched, additionalId)),
+    onOrderLoaded: (fetched) => dispatch(actions.fetchOrder(fetched)),
     onError: (err) => dispatch(actions.addError('Произошла ошибка выполнения запроса', err.message))
 })
 

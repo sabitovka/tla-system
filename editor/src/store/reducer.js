@@ -19,7 +19,7 @@ export default function reducer(state = initialState, action) {
       return { ...state, loading: action.payload, transport, rawOrders };
     }
     case actions.ORDER_FETCHED: {
-      const orders = state.orders.concat({ ...action.payload, orderId: action.payload.id });
+      const orders = state.orders.concat({ ...action.payload });
       return { ...state, orders};
     }
     case actions.PRODUCT_ADD: {
@@ -29,7 +29,7 @@ export default function reducer(state = initialState, action) {
     case actions.PRODUCT_DELETE: {
         const productsQueue = state.productsQueue.filter(
             (item) => !(item.productId === action.payload.productId 
-                && item.additionalId === action.payload.additionalId))
+                && item.orderId === action.payload.orderId))
         return { ...state, productsQueue }
     }
     default:
