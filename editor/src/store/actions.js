@@ -46,3 +46,18 @@ export const setWeight = (value) => ({
   type: actions.WEIGHT_SET,
   payload: { value }
 })
+
+export const fetchAllOrder = (orders) => ({
+  type: actions.ORDERS_ALL_FETCHED,
+  payload: { orders }
+})
+
+export const addOrder = ({ id }, loadingId, action) => ({
+  type: actions.ORDER_ADD,
+  payload: { id, loadingId, action }
+})
+
+export const removeOrder = ({ id }, loadingId) => ({
+  type: actions.ORDER_REMOVE,
+  payload: { id, loadingId }
+})

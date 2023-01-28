@@ -1,14 +1,16 @@
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useHttp from '../hooks/http.hook';
 import NewOrderModal from './NewOrderModal';
 import OrderCard from './OrderCard';
 import config from '../config/default';
+import * as actions from "../store/actions";
 
 export default function OrdersList() {
   const orders = useSelector((state) => state.rawOrders);
   const productsQueue = useSelector((state) => state.productsQueue);
+  const dispatch = useDispatch();
   const { request } = useHttp();
 
   const orderIds = orders.map((order) => order.id);
@@ -19,7 +21,9 @@ export default function OrdersList() {
       `${config.app.orderApiUrl}/app/web/api/products/save-batch`,
       'POST',
       productsQueue
-    ).then((data) => console.log('saved', data))
+    )
+    .then(() => alert('Сохранено'))
+    .catch((e) => dispatch(actions.addError('Произошла ошибка при выполнении запроса', e.message)));
   }
 
   return (

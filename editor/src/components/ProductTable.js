@@ -7,11 +7,11 @@ import * as actions from "../store/actions";
 export default function ProductTable({ products, orderId }) {
   const dispatch = useDispatch();
 
-  const onChecked = (product, action) => {
+  const addToQueue = (product, action) => {
     dispatch(actions.addProduct(product, orderId, action));
   }
 
-  const onUnchecked = (product) => {
+  const removeFromQueue = (product) => {
     dispatch(actions.deleteProduct(product, orderId));
   }
 
@@ -21,11 +21,8 @@ export default function ProductTable({ products, orderId }) {
     const totalVolume = loadedProducts.reduce((prev, cur) => prev + cur.totalVolume, 0);
     const totalCost = loadedProducts.reduce((prev, cur) => prev + cur.total, 0);
 
-    console.log('Вес', totalWeight);
     dispatch(actions.setWeight(totalWeight));
-    console.log('Объем', totalVolume);
     dispatch(actions.setVolume(totalVolume));
-    console.log('Стоимость', totalCost);
     dispatch(actions.setCost(totalCost));
   }, [products, dispatch]);
 
@@ -49,8 +46,8 @@ export default function ProductTable({ products, orderId }) {
             <ProductTableRow
               key={idx}
               product={product}
-              onChecked={onChecked}
-              onUnchecked={onUnchecked}
+              addToQueue={addToQueue}
+              removeFromQueue={removeFromQueue}
             />
           ))
         }

@@ -2,6 +2,7 @@
 
 namespace app\modules\api\controllers;
 
+use app\models\LoadingOrder;
 use app\models\LoadingOrderProduct;
 use Yii;
 use yii\rest\ActiveController;
@@ -37,10 +38,14 @@ class ProductsController extends ActiveController {
         $transaction = LoadingOrderProduct::getDb()->beginTransaction();
         try {
             foreach ($items as $item) {
-                $newItem = new LoadingOrderProduct();
-                $newItem->loading_order_id = $item['orderId'];
-                $newItem->poduct_id = $item['productId'];
-                $newItem->save();
+                if (strcmp($item['action'], 'delete') == 0) {
+                    LoadingOrderProduct::deleteAll(['loading_order_id' => $item['orderId'], 'poduct_id' => $item['productId']]);
+                } else {
+                    $newItem = new LoadingOrderProduct();
+                    $newItem->loading_order_id = $item['orderId'];
+                    $newItem->poduct_id = $item['productId'];
+                    $newItem->save();
+                }
             }
             $transaction->commit();
         } catch(\Throwable $e) {

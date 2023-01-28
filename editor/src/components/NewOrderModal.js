@@ -1,14 +1,54 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Table from "react-bootstrap/Table";
 import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
+import useHttp from '../hooks/http.hook';
+import * as actions from '../store/actions';
+import config from '../config/default';
+import { NewOrderModalItem } from "./NewOrderModalItem";
 
 export default function NewOrderModal(props) {
   const [show, setShow] = useState(false);
+  const { request } = useHttp();
+  const orders = useSelector((state) => state.allOrders);
+  const ordersQueue = useSelector((state) => state.ordersQueue);
+  const loading = useSelector((state) => state.loading)
+  const dispatch = useDispatch();
 
+  
+  useEffect(() => {
+    if (show && !orders.length) {
+      request(`http://transportloading/app/web/api/orders/all?forLoadingId=${loading.id}`)
+      .then((data) => dispatch(actions.fetchAllOrder(data)))
+      .catch((err) => dispatch(actions.addError(err)));
+    }
+  }, [orders, show, request, dispatch, loading.id]);
+  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleSave = () => {
+    request(
+      `${config.app.orderApiUrl}/app/web/api/orders/save-batch`,
+      'POST',
+      ordersQueue
+    )
+    .then(() => {
+      window.location.reload();
+    })
+    .catch((e) => dispatch(actions.addError('Произошла ошибка при выполнении запроса', e.message)));
+  }
+
+  const addToQueue = (order, action) => {
+    dispatch(actions.addOrder(order, loading.id, action));
+  }
+
+  const removeFromQueue = (product) => {
+    dispatch(actions.removeOrder(product, loading.id));
+  } 
+
+  const ordersCount = useMemo(() => orders.filter((order) => order.isSelected).length, [orders]);
 
   return (
     <div {...props}>
@@ -37,25 +77,24 @@ export default function NewOrderModal(props) {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><Form.Check type="checkbox" /></td>
-                <td>Заказчик</td>
-                <td>Телефон</td>
-                <td>Адрес</td>
-                <td>Товаров всего</td>
-                <td>Сумма</td>
-              </tr>
+              {
+                orders.map((order, idx) => <NewOrderModalItem
+                  order={order}
+                  key={idx}
+                  addToQueue={addToQueue}
+                  removeFromQueue={removeFromQueue} />)
+              }
             </tbody>
           </Table>
         </Modal.Body>
         <Modal.Footer>
           <div className='float-left'>
-            Выбрано зказов: 6/7
+            Выбрано зказов: {ordersCount + ordersQueue.length}/{orders.length}
           </div>
           <Button variant="secondary" onClick={handleClose}>
             Отменить
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleSave}>
             Добавить
           </Button>
         </Modal.Footer>

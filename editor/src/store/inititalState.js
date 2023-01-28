@@ -5,6 +5,8 @@ const initialState = {
   orders: [],
   rawOrders: [],
   productsQueue: [],
+  allOrders: [],
+  ordersQueue: [],
   totalCost: 0,
   totalWeight: 0,
   totalVolume: 0,

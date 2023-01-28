@@ -1,14 +1,21 @@
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 
-export default function ProductTableRow({ product, onChecked, onUnchecked }) {
+export default function ProductTableRow({ product, addToQueue, removeFromQueue }) {
   const [loaded, setLoaded] = useState(product.isLoaded);
 
   function onCheckChange(e) {
     const checked = e.target.checked
     setLoaded(checked);
-    const fn = checked ? onChecked : onUnchecked;
+    
+    var fn;
+    if (product.isLoaded) {
+      fn = checked ? removeFromQueue : addToQueue;
+    } else {
+      fn = checked ? addToQueue : removeFromQueue;
+    }
     fn(product, product.isLoaded ? 'delete' : 'insert');
+
   }
 
   const style = {

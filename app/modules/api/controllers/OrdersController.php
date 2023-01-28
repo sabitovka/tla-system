@@ -6,6 +6,7 @@ use app\models\LoadingOrder;
 use app\models\LoadingOrderProduct;
 use yii\rest\ActiveController;
 use GuzzleHttp\Client;
+use Yii;
 
 class OrdersController extends ActiveController {
 
@@ -62,6 +63,47 @@ class OrdersController extends ActiveController {
         $order['id'] = (integer) $id;
 
         return $order;
+    }
+
+    public function actionAll($forLoadingId = null) {
+        // Create a client with a base URI
+        $client = new Client(['base_uri' => 'http://localhost:3001']);
+        // Send a request to https://foo.com/api/test
+        $orders = json_decode($client->request('GET', "orders")->getBody(), true);
+
+        if (!$forLoadingId) {
+            return $orders;
+        }
+
+        $loadedOrders = LoadingOrder::find()->where(['loading_id' => $forLoadingId])->all();
+        foreach ($orders as &$order) {
+            $order['isSelected'] = $this->searchForId($order['id'], $loadedOrders, 'order_id') !== null;
+        }
+        return $orders;
+    }
+
+    public function actionSaveBatch() {
+        $items = Yii::$app->request->post();
+
+        $transaction = LoadingOrder::getDb()->beginTransaction();
+        try {
+            foreach ($items as $item) {
+                if (strcmp($item['action'], 'delete') == 0) {
+                    LoadingOrder::deleteAll(['order_id' => $item['id'], 'loading_id' => $item['loadingId']]);
+                } else {
+                    $newItem = new LoadingOrder();
+                    $newItem->order_id = $item['id'];
+                    $newItem->loading_id = $item['loadingId'];
+                    $newItem->save();
+                }
+            }
+            $transaction->commit();
+        } catch(\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+
+        return count($items);
     }
 
     private function searchForId($id, $array, $idKey = 'id') {
