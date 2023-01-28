@@ -31,4 +31,8 @@ class LoadingsController extends Controller {
     throw new BadRequestHttpException('Необходимо выбрать транспорт');
   }
 
+  public function actionEditor() {
+    return $this->render('editor', ['id' => $_GET['id']]);
+  }
+
 }

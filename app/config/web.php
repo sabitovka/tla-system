@@ -17,6 +17,9 @@ $config = [
         'api' => [
             'class' => 'app\modules\api\Rest',
         ],
+        'exports' => [
+            'class' => 'app\modules\exports\Exports'
+        ]
     ],
     'components' => [
         'request' => [
