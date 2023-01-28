@@ -65,6 +65,9 @@ export default function reducer(state = initialState, action) {
       const totalWeight = state.totalWeight + action.payload.value;
       return { ...state, totalWeight }
     }
+    case actions.SET_VALID: {
+      return { ...state, isValid: action.payload }
+    }
     default:
       return state;
   }

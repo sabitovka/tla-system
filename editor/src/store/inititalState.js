@@ -10,6 +10,7 @@ const initialState = {
   totalCost: 0,
   totalWeight: 0,
   totalVolume: 0,
+  isValid: true,
 }
 
 export default initialState;

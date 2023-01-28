@@ -10,3 +10,4 @@ export const PRODUCT_DELETE = 'PRODUCT_DELETE';
 export const COST_SET = 'COST_SET';
 export const WEIGHT_SET = 'WEIGHT_SET';
 export const VOLUME_SET = 'VOLUME_SET';
+export const SET_VALID = 'SET_VALID';

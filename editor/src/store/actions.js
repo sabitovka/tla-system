@@ -61,3 +61,8 @@ export const removeOrder = ({ id }, loadingId) => ({
   type: actions.ORDER_REMOVE,
   payload: { id, loadingId }
 })
+
+export const setValid = (isValid) => ({
+  type: actions.SET_VALID,
+  payload: isValid
+})
