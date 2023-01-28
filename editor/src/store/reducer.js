@@ -54,15 +54,15 @@ export default function reducer(state = initialState, action) {
         return { ...state, productsQueue, totalCost, totalWeight, totalVolume }
     }
     case actions.COST_SET: {
-      const totalCost = action.payload.value;
+      const totalCost = state.totalCost + action.payload.value;
       return { ...state, totalCost }
     }
     case actions.VOLUME_SET: {
-      const totalVolume = action.payload.value;
+      const totalVolume = state.totalVolume + action.payload.value;
       return { ...state, totalVolume }
     }
     case actions.WEIGHT_SET: {
-      const totalWeight = action.payload.value;
+      const totalWeight = state.totalWeight + action.payload.value;
       return { ...state, totalWeight }
     }
     default:
