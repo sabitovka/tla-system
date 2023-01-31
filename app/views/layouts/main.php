@@ -52,6 +52,13 @@ AppAsset::register($this);
                 ['label' => 'Транспорт', 'url' => ['transport/']],
               ],
             ],
+            [
+              'label' => 'Администрирование',
+              'items' => [
+                ['label' => 'Пользователи', 'url' => ['settings/']],
+                ['label' => 'Параметры', 'url' => ['settings/']],
+              ],
+            ],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Вход', 'url' => ['/site/login']]
             ) : (
