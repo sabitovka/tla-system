@@ -1,19 +1,22 @@
 <?php
-  $id = $loading->id;
-  $creationDate = gmdate('d.m.y', strtotime($loading->creation_date));
-  $transportName = $loading->transport->name;
-  $transportStateNumber = $loading->transport->state_number;
-  $isLoaded = $loading->is_loaded;
-  $cardClassName = $isLoaded ? 'border-success' : 'border-dark';
-  $shippedButtonClassName = $isLoaded ? 'text-success' : 'text-danger';
+
+use yii\bootstrap4\Html;
+use yii\helpers\Url;
+
+$id = $loading->id;
+$creationDate = gmdate('d.m.y', strtotime($loading->creation_date));
+$transportName = $loading->transport->name;
+$transportStateNumber = $loading->transport->state_number;
+$isLoaded = $loading->is_loaded;
+$cardClassName = $isLoaded ? 'border-success' : 'border-dark';
+$shippedButtonClassName = $isLoaded ? 'text-success' : 'text-danger';
 ?>
 
-<?= <<<HTML
 <div class="col-4">
   <div class='card mb-4 $cardClassName' >
     <div class="card-header color-success">
       <div class="d-flex justify-content-between">
-        <span>Погрузка №$id от $creationDate</span>
+        <span>Погрузка №<?= $id ?> от <?= $creationDate ?></span>
         <a role="menu" data-toggle="dropdown" style="cursor: pointer; user-select: none;">
           ...
           <div class="dropdown-menu" >
@@ -27,7 +30,7 @@
       </div>
     </div>
     <div class="card-body">
-      <h6 class="card-subtitle mb-2 ">$transportName - $transportStateNumber</h6>
+      <h6 class="card-subtitle mb-2 "><?= $transportName ?> - <?= $transportStateNumber ?></h6>
       <p class="card-text">
         Заказов <b>3</b> на сумму <b>4500 РУБ</b>.</br>
         Всего товаров <b>10</b> весом <b>550 Кг</b>.
@@ -38,10 +41,6 @@
         <a href="#" class="card-link $shippedButtonClassName ">Не отгружено</a>
       </div>
     </div>
-    <div class="card-footer btn text-center p-1">
-      Редактировать
-    </div>
+    <?= Html::a('Редактировать', Url::to(['loadings/editor', 'id' => $id]), ['class' => 'card-footer btn text-center p-1', 'target' => '_blank']) ?> 
   </div>
 </div>
-HTML;
-?>
