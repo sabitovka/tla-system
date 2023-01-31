@@ -4,7 +4,7 @@ use yii\bootstrap4\Html;
 use yii\helpers\Url;
 
 $id = $loading->id;
-$creationDate = gmdate('d.m.y', strtotime($loading->creation_date));
+$creationDate = gmdate('d.m.Y', strtotime($loading->creation_date));
 $transportName = $loading->transport->name;
 $transportStateNumber = $loading->transport->state_number;
 $isLoaded = $loading->is_loaded;
@@ -20,9 +20,10 @@ $shippedButtonClassName = $isLoaded ? 'text-success' : 'text-danger';
         <a role="menu" data-toggle="dropdown" style="cursor: pointer; user-select: none;">
           ...
           <div class="dropdown-menu" >
-            <a class="dropdown-item" href="#">Редактировать</a>
+            <?= Html::a("Редактировать", Url::to(['loadings/editor', 'id' => $id]), ['class' => "dropdown-item", 'target' => "_blank"]) ?>
             <a class="dropdown-item" href="#">Зарегистировать оплату</a>
-            <a class="dropdown-item" href="#">Груз отгружен</a>
+            <a class="dropdown-item" href="#">Отгрузить</a>
+            <?= Html::a('Скачать пакет документов', Url::to(['/exports/docx/torg12', "loadingId" => $id]), ['class' => "dropdown-item"]) ?>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Закрыть погрузку</a>
           </div>
