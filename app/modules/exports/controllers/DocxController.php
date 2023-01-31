@@ -2,10 +2,11 @@
 
 namespace app\modules\exports\controllers;
 
+use Yii;
+use ZipArchive;
 use app\models\Loading;
 use yii\web\Controller;
 use app\modules\exports\documents\Torg12;
-use ZipArchive;
 
 /**
  * Default controller for the `api` module
@@ -45,6 +46,6 @@ class DocxController extends Controller {
 
         $zip->close(); 
 
-        return json_encode($files, JSON_UNESCAPED_UNICODE);
+        return Yii::$app->response->sendFile($fullZipName);
     }
 }
