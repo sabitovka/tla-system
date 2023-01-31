@@ -5,9 +5,24 @@ namespace app\controllers;
 use app\models\Loading;
 use app\models\Transport;
 use yii\base\Controller;
+use yii\filters\AccessControl;
 use yii\web\BadRequestHttpException;
 
 class LoadingsController extends Controller {
+
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
 
   public function actionIndex() {
     $transport = Transport::find()->all();
