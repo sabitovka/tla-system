@@ -34,45 +34,47 @@ AppAsset::register($this);
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
         ],
     ]);
-    echo Nav::widget([
-        'options' => ['class' => ['navbar-nav', 'ml-auto']],
-        'items' => [
-            [
-              'label' => 'Загрузки',
-              'items' => [
-                ['label' => 'Не отгруженные', 'url' => ['loadings/']],
-                ['label' => 'Отгруженные', 'url' => ['loadings/']], 
-                ['label' => 'Закрытые', 'url' => ['loadings/']],
-                ['label' => 'Все', 'url' => ['loadings/']],
-              ],
-            ],
-            [
-              'label' => 'Справочники',
-              'items' => [
-                ['label' => 'Транспорт', 'url' => ['transport/']],
-              ],
-            ],
-            [
-              'label' => 'Администрирование',
-              'items' => [
-                ['label' => 'Пользователи', 'url' => ['/users']],
-                ['label' => 'Параметры', 'url' => ['settings/org']],
-              ],
-            ],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Вход', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post', ['class' => ['form-inline', 'ml-auto']])
-                . Html::submitButton(
-                    'Выйти (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
+    if (!Yii::$app->user->isGuest) {
+        echo Nav::widget([
+            'options' => ['class' => ['navbar-nav', 'ml-auto']],
+            'items' => [
+                [
+                  'label' => 'Загрузки',
+                  'items' => [
+                    ['label' => 'Не отгруженные', 'url' => ['loadings/']],
+                    ['label' => 'Отгруженные', 'url' => ['loadings/']], 
+                    ['label' => 'Закрытые', 'url' => ['loadings/']],
+                    ['label' => 'Все', 'url' => ['loadings/']],
+                  ],
+                ],
+                [
+                  'label' => 'Справочники',
+                  'items' => [
+                    ['label' => 'Транспорт', 'url' => ['transport/']],
+                  ],
+                ],
+                [
+                  'label' => 'Администрирование',
+                  'items' => [
+                    ['label' => 'Пользователи', 'url' => ['/users']],
+                    ['label' => 'Параметры', 'url' => ['settings/org']],
+                  ],
+                ],
+                Yii::$app->user->isGuest ? (
+                    ['label' => 'Вход', 'url' => ['/site/login']]
+                ) : (
+                    '<li>'
+                    . Html::beginForm(['/site/logout'], 'post', ['class' => ['form-inline', 'ml-auto']])
+                    . Html::submitButton(
+                        'Выйти (' . Yii::$app->user->identity->username . ')',
+                        ['class' => 'btn btn-link logout']
+                    )
+                    . Html::endForm()
+                    . '</li>'
                 )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
-    ]);
+            ],
+        ]);
+    }
     NavBar::end();
     ?>
 </header>
