@@ -19,7 +19,11 @@ $config = [
         ],
         'exports' => [
             'class' => 'app\modules\exports\Exports'
-        ]
+        ],
+        // 'settings' => [
+        //     'class' => 'pheme\settings\Module',
+        //     'sourceLanguage' => 'ru'
+        // ],
     ],
     'components' => [
         'request' => [
@@ -63,8 +67,11 @@ $config = [
             'rules' => [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/loadings'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/orders'],
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/products'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/orders'],
             ],
+        ],
+        'settings' => [
+            'class' => 'pheme\settings\components\Settings'
         ],
     ],
     'params' => $params,
