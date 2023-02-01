@@ -1,6 +1,6 @@
 const dev = {
     app: {
-        orderApiUrl: "http://localhost:8080/api",
+        orderApiUrl: "http://transportloading/app/web/api",
     }
 }
 
