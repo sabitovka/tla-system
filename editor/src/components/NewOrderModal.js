@@ -19,7 +19,7 @@ export default function NewOrderModal(props) {
   
   useEffect(() => {
     if (show && !orders.length) {
-      request(`http://transportloading/app/web/api/orders/all?forLoadingId=${loading.id}`)
+      request(`${config.app.orderApiUrl}/orders/all?forLoadingId=${loading.id}`)
       .then((data) => dispatch(actions.fetchAllOrder(data)))
       .catch((err) => dispatch(actions.addError(err)));
     }

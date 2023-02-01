@@ -12,7 +12,7 @@ const OrderCard = ({ orderId, order, eventKey, onOrderLoaded, onError }) => {
 
   const fetchOrder = useCallback(async () => {
     try {
-      request(`${config.app.orderApiUrl}/app/web/api/orders/${orderId}`)
+      request(`${config.app.orderApiUrl}/orders/${orderId}`)
         .then(onOrderLoaded)
         .catch(onError);
     } catch (e) {
