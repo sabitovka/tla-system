@@ -24,7 +24,7 @@ Ensure you have the following installed:
 
 ## Installation and Running
 
-### To install and the project, follow these steps:
+### To install the project, follow these steps:
 
 1. Clone the project
 ```cmd
@@ -81,7 +81,7 @@ Install the static server:
 npm install http-server -g
 ```
 
-### To run and the project, follow these steps:
+### To run the project, follow these steps:
 1. Run the fake API server
 
     Launch a new terminal instance and enter following
