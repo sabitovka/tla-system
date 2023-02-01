@@ -25,8 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h5>Справочники</h5>
             </div>
             <ul class="list-group list-group-flush">
-                <?= Html::a('Пользователи', Url::to('settings/users'), ['class' => "list-group-item list-group-item-action"]) ?>
-                <?= Html::a('Транспорт', Url::to(['/transport']), ['class' => "list-group-item list-group-item-action"]) ?>
+                <?= Html::a('Пользователи', Url::to('../users'), ['class' => "list-group-item list-group-item-action"]) ?>
+                <?= Html::a('Транспорт', Url::to(['./transport']), ['class' => "list-group-item list-group-item-action"]) ?>
             </ul>
         </div>
     </div>

@@ -40,9 +40,9 @@ AppAsset::register($this);
             [
               'label' => 'Загрузки',
               'items' => [
-                ['label' => 'Не отгруженные', 'url' => ['/site/contact']],
-                ['label' => 'Отгруженные', 'url' => ['/site/about']], 
-                ['label' => 'Закрытые', 'url' => ['/site/contact']],
+                ['label' => 'Не отгруженные', 'url' => ['loadings/']],
+                ['label' => 'Отгруженные', 'url' => ['loadings/']], 
+                ['label' => 'Закрытые', 'url' => ['loadings/']],
                 ['label' => 'Все', 'url' => ['loadings/']],
               ],
             ],
@@ -55,7 +55,7 @@ AppAsset::register($this);
             [
               'label' => 'Администрирование',
               'items' => [
-                ['label' => 'Пользователи', 'url' => ['settings/users']],
+                ['label' => 'Пользователи', 'url' => ['/users']],
                 ['label' => 'Параметры', 'url' => ['settings/org']],
               ],
             ],
