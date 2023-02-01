@@ -51,7 +51,7 @@ cd app && composer install
 ```php
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=sourcehub',
+    'dsn' => 'mysql:host=localhost;dbname=tla',
     'username' => 'root',
     'password' => '1234',
     'charset' => 'utf8',
@@ -112,3 +112,4 @@ http-server build -p 3000
 cd app\web
 php -S 0.0.0.0:8080
 ```
+Тow you can go to `localhost:8080` and work with the system
