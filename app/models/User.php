@@ -7,33 +7,31 @@ use yii\db\ActiveRecord;
 class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
 
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
-
     public static function tableName() {
         return 'users';
+    }
+
+    public function rules() {
+        return [
+            // username and password are both required
+            [['username', 'password'], 'required'],
+            [['role_id'], 'integer'],
+            [['active'], 'boolean'],
+        ];
     }
 
     public function attributeLabels() {
         return [
             'id' => 'ID',
             'username' => 'Имя пользователя',
-            'password' => 'Пароль'
+            'password' => 'Пароль',
+            'role_id' => 'Роль',
+            'active' => 'Активна'
         ];
+    }
+
+    public function getRole() {
+        return $this->hasOne(Role::class, ['id' => 'role_id']);
     }
 
 
