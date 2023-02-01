@@ -55,8 +55,8 @@ AppAsset::register($this);
             [
               'label' => 'Администрирование',
               'items' => [
-                ['label' => 'Пользователи', 'url' => ['settings/']],
-                ['label' => 'Параметры', 'url' => ['settings/']],
+                ['label' => 'Пользователи', 'url' => ['settings/users']],
+                ['label' => 'Параметры', 'url' => ['settings/org']],
               ],
             ],
             Yii::$app->user->isGuest ? (
