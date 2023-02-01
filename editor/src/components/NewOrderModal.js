@@ -30,7 +30,7 @@ export default function NewOrderModal(props) {
 
   const handleSave = () => {
     request(
-      `${config.app.orderApiUrl}/app/web/api/orders/save-batch`,
+      `${config.app.orderApiUrl}/orders/save-batch`,
       'POST',
       ordersQueue
     )
