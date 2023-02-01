@@ -100,11 +100,15 @@ cd editor
 http-server build -p 3000
 ```
 
+>**NOTE**
+>
+>before building the editor application you need to specify an url to the application server in the file `editor\src\config\default.js`. If you are not sure leave the default.
+
 3. Run the application 
 
     Launch a new terminal instance and enter following
 
 ```cmd
-cd app
+cd app\web
 php -S 0.0.0.0:8080
 ```

@@ -18,7 +18,7 @@ export default function OrdersList() {
   const onSave = () => {
     console.log(productsQueue)
     request(
-      `${config.app.orderApiUrl}/app/web/api/products/save-batch`,
+      `${config.app.orderApiUrl}/products/save-batch`,
       'POST',
       productsQueue
     )

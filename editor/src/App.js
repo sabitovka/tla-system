@@ -19,7 +19,7 @@ function App() {
 
   const fetchLoadingData = useCallback(async () => {
     try {
-      const fetched = await request(`${config.app.orderApiUrl}/app/web/api/loadings/${id}?expand=orders,transport`);
+      const fetched = await request(`${config.app.orderApiUrl}/loadings/${id}?expand=orders,transport`);
       console.log(fetched)
       const { creation_date: creationDate, is_loaded: isLoaded } = fetched;
       dispatch(actions.onLoadingFetched({ ...fetched, creationDate, isLoaded }));
